@@ -21,7 +21,7 @@ class LoginForm extends React.Component {
             this.setState({loading: true});
             this.props
                 .submit(this.state.data)
-                .catch(err => this.setState({errors: {login: "Bad Credentials"}}, this.setState({loading: true})));
+                .catch(err => this.setState({errors: {login: "Bad Credentials"}}, this.setState({loading: false})));
         }
     };
 
