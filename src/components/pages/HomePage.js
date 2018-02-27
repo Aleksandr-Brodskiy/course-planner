@@ -10,16 +10,9 @@ class HomePage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Home Page</h1>
-                {this.props.isAuthenticated ?
-                    <div>
-                        <h2>Name: {this.props.user.name}</h2>
-                        <h2>username: {this.props.user.username}</h2>
-                        <h2>First Name: {this.props.user.first_name}</h2>
-                        <h2>Last Name: {this.props.user.last_name}</h2>
-                        <button onClick={this.logout}>Logout</button>
-                    </div>
-                    : <Button><Link to='/login'>Login</Link></Button>}
+                <h1>Welcome to CoursePlanner</h1>
+                <div><Link to='/login'><Button>Login</Button></Link><Link
+                    to='/register'><Button>Register</Button></Link></div>
             </div>
         )
     }

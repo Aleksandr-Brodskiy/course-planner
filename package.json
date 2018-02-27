@@ -5,6 +5,7 @@
   "homepage": "https://dragonbone81.github.io/course-planner",
   "dependencies": {
     "axios": "^0.18.0",
+    "gravatar-url": "^2.0.0",
     "material-ui": "^0.20.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -18,7 +19,8 @@
     "redux-thunk": "^2.2.0",
     "semantic-ui": "^2.3.0",
     "semantic-ui-css": "^2.3.0",
-    "semantic-ui-react": "^0.78.2"
+    "semantic-ui-react": "^0.78.2",
+    "validator": "^9.4.1"
   },
   "scripts": {
     "predeploy": "npm run build",

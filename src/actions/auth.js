@@ -21,6 +21,15 @@ export const login = (credentials) => (dispatch) =>
         )
     );
 
+export const register = (data) => (dispatch) => (
+    api.user.register(data).then(
+        user => {
+            localStorage.user = JSON.stringify(user.data);
+            dispatch(userLoggedIn(user.data));
+        }
+    ));
+
+
 export const logout = () => (dispatch) => {
     localStorage.removeItem('user');
     dispatch(userLoggedOut());
