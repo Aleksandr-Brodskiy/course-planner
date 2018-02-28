@@ -17,7 +17,7 @@ class ClassSearchForm extends React.Component {
         this.setState({
             loading: true
         });
-        axios.get('https://cse120-course-planner.herokuapp.com/course-search', {params: {course: this.state.query}})
+        axios.get('https://cse120-course-planner.herokuapp.com/api/course-search', {params: {course: this.state.query}})
             .then(res => res.data)
             .then(classes => {
                 //console.log(classes);
