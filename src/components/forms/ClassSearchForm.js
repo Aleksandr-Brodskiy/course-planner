@@ -24,10 +24,35 @@ class ClassSearchForm extends React.Component {
                 const options = [];
                 const classesHash = {};
                 // console.log(this.state.chosen_classes);
+                let y = this.state.chosen_cla
+                /*sses.filter(course_obj => {
+                                    if (!!this.props.courses.filter(course => course.crn === course_obj.id)) {
+                                        return course_obj;
+                                    }
+                                    return null;
+
+                                });*/
+                // let y = this.props.courses.filter(course_obj => (this.state.chosen_classes.some(course => course_obj.id !== course.crn)));
+                // console.log(y);
+                // this.setState({chosen_classes: y});
+                // this.props.courses.forEach(course=>{
+                //     let found = this.state.chosen_classes.some(function (el) {
+                //         return el.username === name;
+                //     });
+                // });
+                let x = [];
+                this.state.chosen_classes.forEach(course => {
+                    let found = this.props.courses.some(function (el) {
+                        return el.id === course.crn;
+                    });
+                    if (found)
+                        x.push(course);
+                });
+
+                console.log(x);
+                this.setState({chosen_classes: x});
                 classes.forEach(course => {
-                    // if (!(this.state.chosen_classes === undefined || this.state.chosen_classes.length === 0)
-                    //     && !!this.state.chosen_classes.filter(course_obj => (course_obj.crn === course.crn)))
-                    //     return;
+
                     let x = this.state.chosen_classes.filter(course_obj => (course_obj.crn === course.crn));
                     if (x.length > 0) {
                         return;
@@ -45,6 +70,7 @@ class ClassSearchForm extends React.Component {
     };
 
     onSearchChange = (e, data) => {
+        // console.log(this.state.chosen_classes);
         if (data.searchQuery.length >= 3) {
             clearTimeout(this.timer);
             this.setState({

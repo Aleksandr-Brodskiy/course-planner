@@ -1,12 +1,17 @@
 import React from 'react'
-import {Segment, Button, Icon} from 'semantic-ui-react'
+import {Segment, Button, Icon, List} from 'semantic-ui-react'
 import ClassSearchForm from '../forms/ClassSearchForm'
 
 
 const Todo = ({todo, remove}) => {
-    return (<Button icon labelPosition='right'>{todo.text}<Icon className='window close icon' onClick={() => {
-        remove(todo.id)
-    }}/></Button>);
+    return (<List.Item>
+        <List.Content>
+            <Button icon labelPosition='right'>{todo.text} Available: {todo.spots_available}<Icon
+                className='window close icon' onClick={() => {
+                remove(todo.id)
+            }}/></Button>
+        </List.Content>
+    </List.Item>);
 };
 
 
@@ -15,7 +20,7 @@ const TodoList = ({todos, remove}) => {
     const todoNode = todos.map((todo) => {
         return (<Todo todo={todo} key={todo.id} remove={remove}/>)
     });
-    return (<div className="list-group" style={{marginTop: '30px'}}>{todoNode}</div>);
+    return (<List horizontal>{todoNode}</List>);
 };
 
 class SchedulesPage extends React.Component {
@@ -26,7 +31,7 @@ class SchedulesPage extends React.Component {
 
     addTodo(course) {
         // Assemble data
-        const todo = {text: course.course_id, id: course.crn};
+        const todo = {text: course.course_id, id: course.crn, spots_available: course.available};
         // Update data
         this.state.courses.push(todo);
         // Update state
@@ -54,7 +59,7 @@ class SchedulesPage extends React.Component {
             <div>
                 <Segment>
                     <h2>Search for Classes to add:</h2>
-                    <ClassSearchForm onCourseSelect={this.onCourseSelect}/>
+                    <ClassSearchForm onCourseSelect={this.onCourseSelect} courses={this.state.courses}/>
 
                     {this.state.courses && <div>{this.state.courses.course_id}</div>}
                 </Segment>
