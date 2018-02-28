@@ -6,19 +6,9 @@ class ClassSearchForm extends React.Component {
     state = {
         query: "",
         loading: false,
-        options: [
-            {
-                key: 1,
-                value: 1,
-                text: "First Class",
-            },
-            {
-                key: 2,
-                value: 7,
-                text: "Second Class",
-            }
-        ],
-        classes: {}
+        options: [],
+        classes: {},
+        chosen_classes: [],
     };
 
     fetchOptions = () => {
@@ -27,43 +17,66 @@ class ClassSearchForm extends React.Component {
         this.setState({
             loading: true
         });
-        axios.get('http://127.0.0.1:8000/api/courses/course-search', {params: {course: this.state.query}})
+        axios.get('https://cse120-course-planner.herokuapp.com/course-search', {params: {course: this.state.query}})
             .then(res => res.data)
             .then(classes => {
-                console.log(classes);
+                //console.log(classes);
                 const options = [];
                 const classesHash = {};
-
+                // console.log(this.state.chosen_classes);
                 classes.forEach(course => {
-                    classesHash[course.crn] = course;
+                    // if (!(this.state.chosen_classes === undefined || this.state.chosen_classes.length === 0)
+                    //     && !!this.state.chosen_classes.filter(course_obj => (course_obj.crn === course.crn)))
+                    //     return;
+                    let x = this.state.chosen_classes.filter(course_obj => (course_obj.crn === course.crn));
+                    if (x.length > 0) {
+                        return;
+                    }
+                    classesHash[course.course_id] = course;
                     options.push({
-                        key: course.crn,
+                        key: course.course_id,
                         value: course.course_id,
                         text: course.course_id,
-                    })
+                    });
+                    // console.log(options);
                 });
                 this.setState({loading: false, options, classes: classesHash})
             });
     };
 
     onSearchChange = (e, data) => {
-        clearTimeout(this.timer);
-        this.setState({
-            query: data.searchQuery,
-        });
-        this.timer = setTimeout(this.fetchOptions, 1000);
+        if (data.searchQuery.length >= 3) {
+            clearTimeout(this.timer);
+            this.setState({
+                query: data.searchQuery,
+            });
+            this.timer = setTimeout(this.fetchOptions, 10);
+        }
+        // console.log(this.state.query);
     };
-    onChange = (e, data)=>{
-        this.setState({query:data.value});
-        this.props.onCourseSelect(this.state.classes[data.value])
+    onChange = (e, data) => {
+        this.setState({options: []});
+        this.setState({query: data.value});
+        //console.log(this.state.classes[data.value]);
+        const chosen_classes = this.state.chosen_classes;
+        chosen_classes.push(this.state.classes[data.value]);
+        this.setState({chosen_classes: chosen_classes});
+        this.props.onCourseSelect(this.state.classes[data.value]);
+
+        // console.log(this.state.chosen_classes);
+    };
+    search = (options, query) => {
+        return options;
     };
 
     render() {
         return (
             <Form>
-                <Dropdown search fluid placeholder="Search for a class to add" value={this.state.query}
+                <Dropdown selection search={this.search} fluid placeholder="Search for a class to add"
+                          value={this.state.query}
                           onSearchChange={this.onSearchChange} options={this.state.options}
-                          loading={this.state.loading} onChange={this.onChange}/>
+                          loading={this.state.loading} onChange={this.onChange} selectOnNavigation={false}
+                          minCharacters={3}/>
             </Form>
         )
     }
