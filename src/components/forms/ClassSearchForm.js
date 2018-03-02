@@ -24,7 +24,7 @@ class ClassSearchForm extends React.Component {
                 const options = [];
                 const classesHash = {};
                 // console.log(this.state.chosen_classes);
-                let y = this.state.chosen_cla
+                // let y = this.state.chosen_cla
                 /*sses.filter(course_obj => {
                                     if (!!this.props.courses.filter(course => course.crn === course_obj.id)) {
                                         return course_obj;
@@ -43,25 +43,25 @@ class ClassSearchForm extends React.Component {
                 let x = [];
                 this.state.chosen_classes.forEach(course => {
                     let found = this.props.courses.some(function (el) {
-                        return el.id === course.crn;
+                        return el.id === course;
                     });
                     if (found)
                         x.push(course);
                 });
 
-                console.log(x);
+                // console.log(x);
                 this.setState({chosen_classes: x});
                 classes.forEach(course => {
 
-                    let x = this.state.chosen_classes.filter(course_obj => (course_obj.crn === course.crn));
+                    let x = this.state.chosen_classes.filter(course_obj => (course_obj === course));
                     if (x.length > 0) {
                         return;
                     }
-                    classesHash[course.course_id] = course;
+                    classesHash[course] = course;
                     options.push({
-                        key: course.course_id,
-                        value: course.course_id,
-                        text: course.course_id,
+                        key: course,
+                        value: course,
+                        text: course,
                     });
                     // console.log(options);
                 });

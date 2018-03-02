@@ -1,17 +1,16 @@
 import React from 'react'
-import {Segment, Button, Icon, List} from 'semantic-ui-react'
+import {Divider, Button, Icon, List, Grid} from 'semantic-ui-react'
 import ClassSearchForm from '../forms/ClassSearchForm'
+import axios from "axios/index";
 
 
 const Todo = ({todo, remove}) => {
-    return (<List.Item>
-        <List.Content>
-            <Button icon labelPosition='right'>{todo.text} Available: {todo.spots_available}<Icon
-                className='window close icon' onClick={() => {
-                remove(todo.id)
-            }}/></Button>
-        </List.Content>
-    </List.Item>);
+    return (
+        <div><Button icon labelPosition='right'>{todo.text} <Icon
+            className='window close icon' onClick={() => {
+            remove(todo.id)
+        }}/></Button><Divider horizontal/></div>
+    );
 };
 
 
@@ -20,20 +19,22 @@ const TodoList = ({todos, remove}) => {
     const todoNode = todos.map((todo) => {
         return (<Todo todo={todo} key={todo.id} remove={remove}/>)
     });
-    return (<List horizontal>{todoNode}</List>);
+    return (<div>{todoNode}</div>);
 };
 
 class SchedulesPage extends React.Component {
     state = {
         courses: [],
-        data: []
+        data: [],
+        course_data: [],
     };
 
     addTodo(course) {
         // Assemble data
-        const todo = {text: course.course_id, id: course.crn, spots_available: course.available};
+        const todo = {text: course, id: course};
         // Update data
         this.state.courses.push(todo);
+        // console.log(todo);
         // Update state
         this.setState({courses: this.state.courses});
         // console.log(this.state.courses);
@@ -52,24 +53,35 @@ class SchedulesPage extends React.Component {
     onCourseSelect = course => {
         // console.log(course);
         this.addTodo(course);
+        axios.post('http://127.0.0.1:8000/api/courses/course-match', {course_list: [course]}).then(res => res.data).then(course_data =>
+            this.state.course_data.push(course_data)
+        )
     };
 
     render() {
+        console.log(this.state.course_data);
         return (
-            <div>
-                <Segment>
-                    <h2>Search for Classes to add:</h2>
-                    <ClassSearchForm onCourseSelect={this.onCourseSelect} courses={this.state.courses}/>
+            <Grid>
+                <Grid.Row>
+                    <Grid.Column width={5}>
+                        <h2>Search for Classes to add:</h2>
+                        <ClassSearchForm onCourseSelect={this.onCourseSelect} courses={this.state.courses}/>
+                        <Divider horizontal/>
+                        <TodoList
+                            todos={this.state.courses}
+                            remove={this.handleRemove.bind(this)}
+                        />
 
-                    {this.state.courses && <div>{this.state.courses.course_id}</div>}
-                </Segment>
-                <Segment>
-                    <TodoList
-                        todos={this.state.courses}
-                        remove={this.handleRemove.bind(this)}
-                    />
-                </Segment>
-            </div>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Divider vertical/>
+
+                    </Grid.Column>
+                    <Grid.Column>
+                        <h1>Schedule</h1>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
 
         )
     }
