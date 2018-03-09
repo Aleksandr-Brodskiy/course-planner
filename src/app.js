@@ -7,7 +7,7 @@ const Template = () => {
       <h1>Bobcat Courses App.</h1>
     </div>
   );
-}
+};
 
 
 ReactDOM.render(<Template />, document.getElementById('app'));
