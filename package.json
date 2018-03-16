@@ -1,36 +1,26 @@
 {
-  "name": "course-planner",
-  "version": "0.1.0",
-  "private": true,
-  "homepage": "https://dragonbone81.github.io/course-planner",
-  "dependencies": {
-    "axios": "^0.18.0",
-    "gravatar-url": "^2.0.0",
-    "material-ui": "^0.20.0",
-    "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-redux": "^5.0.7",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1",
-    "react-tap-event-plugin": "^3.0.2",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
-    "semantic-ui": "^2.3.0",
-    "semantic-ui-css": "^2.3.0",
-    "semantic-ui-react": "^0.78.2",
-    "validator": "^9.4.1"
-  },
+  "name": "indecision-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Miguel Hernandez",
+  "license": "MIT",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "serve": "live-server public/",
+    "build": "webpack",
+    "dev-server": "webpack-dev-server"
   },
-  "devDependencies": {
-    "gh-pages": "^1.1.0"
+  "dependencies": {
+    "babel-cli": "6.24.1",
+    "babel-core": "6.25.0",
+    "babel-loader": "7.1.1",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-preset-env": "1.5.2",
+    "babel-preset-react": "6.24.1",
+    "live-server": "^1.2.0",
+    "react": "16.0.0",
+    "react-dom": "16.0.0",
+    "validator": "8.0.0",
+    "webpack": "3.1.0",
+    "webpack-dev-server": "2.5.1"
   }
 }
