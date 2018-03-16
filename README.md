@@ -1,5 +1,4 @@
-# Bobcat Courses Front End
-
+# React Development Environment
 ## Getting Started
 Install dependencies
 ```bash
